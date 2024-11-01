@@ -9,6 +9,6 @@ import (
 // QueryHandler is a generic interface for the query handler in application layer (usecase)
 // Q is a type of the query, R is a type of the result.
 type QueryHandler[Q any, R any] interface {
-	// Handle executes the query
-	Handle(ctx context.Context, query Q) (R, error)
+	// Execute performs the query
+	Execute(ctx context.Context, query Q) (R, error)
 }

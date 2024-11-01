@@ -34,17 +34,17 @@ func (m *MockQueryHandler[Q, R]) EXPECT() *MockQueryHandlerMockRecorder[Q, R] {
 	return m.recorder
 }
 
-// Handle mocks base method.
-func (m *MockQueryHandler[Q, R]) Handle(ctx context.Context, query Q) (R, error) {
+// Execute mocks base method.
+func (m *MockQueryHandler[Q, R]) Execute(ctx context.Context, query Q) (R, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Handle", ctx, query)
+	ret := m.ctrl.Call(m, "Execute", ctx, query)
 	ret0, _ := ret[0].(R)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Handle indicates an expected call of Handle.
-func (mr *MockQueryHandlerMockRecorder[Q, R]) Handle(ctx, query interface{}) *gomock.Call {
+// Execute indicates an expected call of Execute.
+func (mr *MockQueryHandlerMockRecorder[Q, R]) Execute(ctx, query interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Handle", reflect.TypeOf((*MockQueryHandler[Q, R])(nil).Handle), ctx, query)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockQueryHandler[Q, R])(nil).Execute), ctx, query)
 }
