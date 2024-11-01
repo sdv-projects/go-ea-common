@@ -37,13 +37,13 @@ type Repository[ID any, Entity any] interface {
 	// Update updates entity.
 	Update(ctx context.Context, e *Entity) (*Entity, error)
 	// UpdateRange updates the list of entities.
-	UpdateRange(ctx context.Context, e []*Entity) ([]*Entity, error)
+	UpdateRange(ctx context.Context, list []*Entity) ([]*Entity, error)
 	// AddOrUpdate inserts or updates entity.
 	AddOrUpdate(ctx context.Context, e *Entity) (*Entity, error)
 	// AddOrUpdateRange  inserts or updates the list of entities.
-	AddOrUpdateRange(ctx context.Context, e []*Entity) ([]*Entity, error)
+	AddOrUpdateRange(ctx context.Context, list []*Entity) ([]*Entity, error)
 	// Delete removes entity.
 	Delete(ctx context.Context, e *Entity) error
 	// DeleteRange removes the list of entities.
-	DeleteRange(ctx context.Context, e []*Entity) error
+	DeleteRange(ctx context.Context, list []*Entity) error
 }
