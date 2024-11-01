@@ -2,6 +2,7 @@ package ddd
 
 import (
 	"context"
+	"errors"
 )
 
 //go:generate mockgen --source=repository.go --destination=mocks/repository.go --package=mocks
@@ -46,4 +47,91 @@ type Repository[ID any, Entity any] interface {
 	Delete(ctx context.Context, e *Entity) error
 	// DeleteRange removes the list of entities.
 	DeleteRange(ctx context.Context, list []*Entity) error
+}
+
+type UnimplementedReadOnlyRepository[ID any, Entity any] struct {
+}
+
+type UnimplementedRepository[ID any, Entity any] struct {
+	UnimplementedReadOnlyRepository[ID, Entity]
+}
+
+func (*UnimplementedReadOnlyRepository[ID, Entity]) GetByID(ctx context.Context, id ID) (*Entity, error) {
+	return nil, errors.ErrUnsupported
+}
+
+func (*UnimplementedReadOnlyRepository[ID, Entity]) Find(
+	ctx context.Context,
+	spec Specification[Entity]) ([]*Entity, error) {
+	return nil, errors.ErrUnsupported
+}
+
+func (*UnimplementedReadOnlyRepository[ID, Entity]) Single(
+	ctx context.Context,
+	spec Specification[Entity]) (*Entity, error) {
+	return nil, errors.ErrUnsupported
+}
+
+func (*UnimplementedReadOnlyRepository[ID, Entity]) SingleOrDefault(
+	ctx context.Context,
+	spec Specification[Entity]) (*Entity, error) {
+	return nil, errors.ErrUnsupported
+}
+
+func (*UnimplementedReadOnlyRepository[ID, Entity]) First(
+	ctx context.Context,
+	spec Specification[Entity]) (*Entity, error) {
+	return nil, errors.ErrUnsupported
+}
+
+func (*UnimplementedReadOnlyRepository[ID, Entity]) FirstOrDefault(
+	ctx context.Context,
+	spec Specification[Entity]) (*Entity, error) {
+	return nil, errors.ErrUnsupported
+}
+
+func (*UnimplementedReadOnlyRepository[ID, Entity]) Count(
+	ctx context.Context,
+	spec Specification[Entity]) (int, error) {
+	return 0, errors.ErrUnsupported
+}
+
+func (*UnimplementedReadOnlyRepository[ID, Entity]) IsExist(
+	ctx context.Context,
+	spec Specification[Entity]) (bool, error) {
+	return false, errors.ErrUnsupported
+}
+
+func (*UnimplementedRepository[ID, Entity]) Add(
+	ctx context.Context,
+	e *Entity) (*Entity, error) {
+	return nil, errors.ErrUnsupported
+}
+
+func (*UnimplementedRepository[ID, Entity]) AddRange(ctx context.Context, list []*Entity) ([]*Entity, error) {
+	return nil, errors.ErrUnsupported
+}
+
+func (*UnimplementedRepository[ID, Entity]) Update(ctx context.Context, e *Entity) (*Entity, error) {
+	return nil, errors.ErrUnsupported
+}
+
+func (*UnimplementedRepository[ID, Entity]) UpdateRange(ctx context.Context, e []*Entity) ([]*Entity, error) {
+	return nil, errors.ErrUnsupported
+}
+
+func (*UnimplementedRepository[ID, Entity]) AddOrUpdate(ctx context.Context, e *Entity) (*Entity, error) {
+	return nil, errors.ErrUnsupported
+}
+
+func (*UnimplementedRepository[ID, Entity]) AddOrUpdateRange(ctx context.Context, e []*Entity) ([]*Entity, error) {
+	return nil, errors.ErrUnsupported
+}
+
+func (*UnimplementedRepository[ID, Entity]) Delete(ctx context.Context, e *Entity) error {
+	return errors.ErrUnsupported
+}
+
+func (*UnimplementedRepository[ID, Entity]) DeleteRange(ctx context.Context, e []*Entity) error {
+	return errors.ErrUnsupported
 }
