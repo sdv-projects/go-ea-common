@@ -23,14 +23,17 @@ type TxFactory interface {
 	BeginTx(ctx context.Context) (Tx, error)
 }
 
-// TxRollback performs Rollback with error suppression and write error to log.
-// If logFunc is nil, then the error isn't written to the log.
-func TxRollback(tx Tx, logFunc func(err error)) {
+// TxRollback performs Rollback with error suppression
+var TxRollback func(tx Tx) = func(tx Tx) { TxRollbackWithLog(tx, nil) }
+
+// TxRollbackWithLog performs Rollback with error suppression and write error to log.
+// If lw is nil, then the error isn't written to the log.
+func TxRollbackWithLog(tx Tx, lw func(err error)) {
 	if tx == nil {
 		return
 	}
-	if err := tx.Rollback(); err != nil && logFunc != nil {
-		logFunc(err)
+	if err := tx.Rollback(); err != nil && lw != nil {
+		lw(err)
 	}
 }
 
