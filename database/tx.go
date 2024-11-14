@@ -2,6 +2,9 @@ package database
 
 import (
 	"context"
+	"errors"
+	"fmt"
+	"reflect"
 )
 
 //go:generate mockgen -source=tx.go -destination=mocks/tx.go -package=database_mocks
@@ -29,4 +32,24 @@ func TxRollback(tx Tx, logFunc func(err error)) {
 	if err := tx.Rollback(); err != nil && logFunc != nil {
 		logFunc(err)
 	}
+}
+
+// CastTx is a helper generic function for casting the Tx interface
+// to the target transaction type.
+// T is the type of the target transaction instance.
+func CastTx[T interface{ Tx }](tx Tx) (result T, err error) {
+	if tx == nil {
+		return result, errors.New("function was called with empty data")
+	}
+
+	var ok bool
+	if result, ok = tx.(T); ok {
+		return
+	}
+
+	return result, fmt.Errorf(
+		"unable to cast object '%s' to '%s'",
+		reflect.TypeOf(tx).String(),
+		reflect.TypeOf(result).String(),
+	)
 }
